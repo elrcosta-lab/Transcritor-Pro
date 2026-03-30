@@ -4,6 +4,14 @@ from faster_whisper import WhisperModel
 import tempfile
 import os
 import time
+from datetime import timedelta
+
+def format_timestamp(seconds: float):
+    """Converte segundos para o formato HH:MM:SS,mmm"""
+    hours, remainder = divmod(seconds, 3600)
+    minutes, second_rem = divmod(remainder, 60)
+    seconds_int, milliseconds = divmod(second_rem, 1)
+    return f"{int(hours):02}:{int(minutes):02}:{int(seconds_int):02},{int(milliseconds * 1000):03}"
 
 # Suprimir avisos de symlinks do HuggingFace no Windows
 os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
@@ -111,9 +119,13 @@ if uploaded_file is not None:
             start_time = time.time()
             
             for segment in segments:
-                full_text += segment.text + " "
-                # Atualiza o container com o texto acumulado
-                transcript_container.markdown(f"> {full_text}")
+                start_str = format_timestamp(segment.start)
+                end_str = format_timestamp(segment.end)
+                segment_text = f"{start_str} - {end_str} -> {segment.text.strip()}\n"
+                full_text += segment_text
+                
+                # Atualiza o container com o texto acumulado (usando bloco de código para preservar quebras de linha)
+                transcript_container.code(full_text, language="text")
                 
                 # Feedback visual de progresso (baseado no tempo do áudio processado vs total)
                 progress = min(segment.end / info.duration, 1.0) if info.duration > 0 else 0
