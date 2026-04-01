@@ -96,7 +96,7 @@ st.markdown(
 
 # Área de Upload
 uploaded_file = st.file_uploader("Arraste ou selecione um arquivo de áudio", type=[
-                                 "mp3", "wav", "m4a", "ogg", "flac", "opus", "mpeg"])
+                                 "mp3", "wav", "m4a", "ogg", "flac", "opus", "mpeg", "mp4"])
 
 if uploaded_file is not None:
     st.audio(uploaded_file, format='audio/wav')
