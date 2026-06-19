@@ -14,3 +14,24 @@ wheels/
 
 # Skills
 .agent/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Python runtime
+*.egg
+.pytest_cache/
+*.log
+.pytype/
+
+# User scripts
+Iniciar App.bat
+run.sh
+run.bat

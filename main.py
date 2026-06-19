@@ -5,6 +5,10 @@ import tempfile
 import os
 import time
 from datetime import timedelta
+from pathlib import Path
+
+
+APP_ICON_PATH = Path(__file__).parent / "assets" / "whisper-icon.svg"
 
 
 def format_timestamp(seconds: float):
@@ -21,7 +25,7 @@ os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
 # Configuração da página para estética premium
 st.set_page_config(
     page_title="Whisper Transcritor Pro",
-    page_icon="🎙️",
+    page_icon=str(APP_ICON_PATH),
     layout="wide",
     initial_sidebar_state="expanded",
 )
